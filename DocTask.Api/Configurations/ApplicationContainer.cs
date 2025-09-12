@@ -3,16 +3,19 @@ using DocTask.Core.Interfaces.Services;
 using DocTask.Data.Repositories;
 using DocTask.Service.Services;
 
-namespace DockTask.Api.Configurations;
-
-public static class ApplicationContainer
+namespace DockTask.Api.Configurations
 {
-    public static IServiceCollection AddApplicationContainer(this IServiceCollection services)
+    public static class ApplicationContainer
     {
-        services.AddScoped<ITaskService, TaskService>();
-        services.AddScoped<ITaskRepository, TaskRepository>();
-        return services;
+        public static IServiceCollection AddApplicationContainer(this IServiceCollection services)
+        {
+            services.AddScoped<ITaskService, TaskService>();
+            services.AddScoped<ITaskRepository, TaskRepository>();
+            services.AddScoped<ISubTaskRepository, SubTaskRepository>();
+            services.AddScoped<ISubTaskService, SubTaskService>();
+            return services;
+        }
+
+
     }
-    
-    
 }

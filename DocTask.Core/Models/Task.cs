@@ -17,7 +17,6 @@ public partial class Task
     public int? PeriodId { get; set; }
 
     public int? AttachedFile { get; set; }
-
     public string? Status { get; set; }
 
     public string? Priority { get; set; }

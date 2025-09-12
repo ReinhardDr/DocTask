@@ -26,7 +26,7 @@ public class TaskService : ITaskService
             Items = paginatedListModel.Items.Select(t => t.ToTaskDto()).ToList(),
         };
     }
-    
+
     public Task<TaskModel?> GetTaskByIdAsync(int taskId) => _taskRepository.GetTaskByIdAsync(taskId);
     public Task<PaginatedList<TaskDto>> GetSubtasksAsync(int parentTaskId, PageOptionsRequest pageOptions, string? search = null)
         => _taskRepository.GetSubtasksAsync(parentTaskId, pageOptions, search);
