@@ -57,11 +57,11 @@ namespace DocTask.Service.Mappers
             if (request.AssigneeId.HasValue)
                 existingSubTask.AssigneeId = request.AssigneeId;
 
-            if (!string.IsNullOrWhiteSpace(request.Status))
-                existingSubTask.Status = request.Status;
+            // if (!string.IsNullOrWhiteSpace(request.Status))
+            //     existingSubTask.Status = request.Status;
 
-            if (!string.IsNullOrWhiteSpace(request.Priority))
-                existingSubTask.Priority = request.Priority;
+            // if (!string.IsNullOrWhiteSpace(request.Priority))
+            //     existingSubTask.Priority = request.Priority;
 
             if (request.StartDate.HasValue)
                 existingSubTask.StartDate = DateOnly.FromDateTime(request.StartDate.Value);
@@ -69,8 +69,8 @@ namespace DocTask.Service.Mappers
             if (request.DueDate.HasValue)
                 existingSubTask.DueDate = DateOnly.FromDateTime(request.DueDate.Value);
 
-            if (request.Percentagecomplete.HasValue)
-                existingSubTask.Percentagecomplete = request.Percentagecomplete;
+            // if (request.Percentagecomplete.HasValue)
+            //     existingSubTask.Percentagecomplete = request.Percentagecomplete;
         }
     }
 }
