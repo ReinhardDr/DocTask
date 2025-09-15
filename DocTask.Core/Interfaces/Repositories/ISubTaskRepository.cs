@@ -7,8 +7,10 @@ public interface ISubTaskRepository
 {
     // Basic CRUD operations
     Task<TaskEntity?> GetByIdAsync(int subTaskId);
+    Task<TaskEntity?> GetBySubIdAsync(int parentTaskId, int subTaskId);
     Task<TaskEntity> CreateAsync(TaskEntity subTask);
-    Task<TaskEntity> UpdateAsync(TaskEntity subTask);
+    Task<TaskEntity?> UpdateSubtask(int subTaskId, int parentTaskId, TaskEntity subtask);
+
     Task<bool> DeleteAsync(int subTaskId);
     Task<bool> ExistsAsync(int subTaskId);
 

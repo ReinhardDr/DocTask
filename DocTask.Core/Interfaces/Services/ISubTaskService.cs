@@ -10,7 +10,9 @@ public interface ISubTaskService
     // Basic CRUD operations
     Task<SubTaskDto?> GetByIdAsync(int subTaskId);
     Task<TaskEntity> CreateAsync(int parentTaskId, CreateSubTaskRequest request);
-    Task<TaskEntity?> UpdateAsync(int subTaskId, UpdateSubTaskRequest request);
+    Task<SubTaskDto?> UpdateSubtask(int parentTaskId, int subtaskId, UpdateSubTaskRequest request);
+
+    // Task<SubTaskDto?> UpdateSubtask(int parentTaskId, int subtaskId);
     Task<bool> DeleteAsync(int subTaskId);
 
     // Query operations

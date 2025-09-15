@@ -128,6 +128,7 @@ namespace DocTask.Api.Controllers
             });
         }
 
+
         // PUT: api/v1/{parentTaskId}/subtask?subTaskId=33
         [HttpPut("{parentTaskId}/subtask")]
         public async Task<IActionResult> UpdateSubTask(int parentTaskId, [FromQuery] int subTaskId, [FromBody] UpdateSubTaskRequest request)
@@ -143,7 +144,7 @@ namespace DocTask.Api.Controllers
 
             try
             {
-                var updatedSubTask = await _subTaskService.UpdateAsync(subTaskId, request);
+                var updatedSubTask = await _subTaskService.UpdateSubtask(parentTaskId, subTaskId, request);
                 if (updatedSubTask == null)
                 {
                     return NotFound(new ApiResponse<string>
@@ -153,7 +154,7 @@ namespace DocTask.Api.Controllers
                     });
                 }
 
-                return Ok(new ApiResponse<SubTaskModel>
+                return Ok(new ApiResponse<SubTaskDto>
                 {
                     Success = true,
                     Data = updatedSubTask,

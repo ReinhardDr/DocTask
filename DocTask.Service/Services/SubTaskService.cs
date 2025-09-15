@@ -22,6 +22,7 @@ public class SubTaskService : ISubTaskService
         return subTask != null ? SubTaskMapper.ToSubTaskDto(subTask) : null;
     }
 
+
     public async Task<TaskEntity> CreateAsync(int parentTaskId, CreateSubTaskRequest request)
     {
         // Xác thực Task cha có không ?
@@ -34,22 +35,25 @@ public class SubTaskService : ISubTaskService
         return await _subTaskRepository.CreateAsync(subTaskEntity);
     }
 
-    public async Task<TaskEntity?> UpdateAsync(int subTaskId, UpdateSubTaskRequest request)
+    public async Task<SubTaskDto?> UpdateSubtask(int parentTaskId, int subTaskId, UpdateSubTaskRequest request)
     {
-        var existingSubTask = await _subTaskRepository.GetByIdAsync(subTaskId);
+        var existingSubTask = await _subTaskRepository.GetBySubIdAsync(parentTaskId, subTaskId);
         if (existingSubTask == null)
             return null;
 
-        // NO VALIDATION - Cập nhật subtask không kiểm tra ngày tháng
+        // // NO VALIDATION - Cập nhật subtask không kiểm tra ngày tháng
+        // SubTaskMapper.UpdateEntity(existingSubTask, request);
+        // return await _subTaskRepository.UpdateSubtask(parentTaskId, existingSubTask);
+
         SubTaskMapper.UpdateEntity(existingSubTask, request);
-        return await _subTaskRepository.UpdateAsync(existingSubTask);
+        var updatedSubtask = await _subTaskRepository.UpdateSubtask(parentTaskId, subTaskId, existingSubTask);
+        return updatedSubtask != null ? SubTaskMapper.ToSubTaskDto(updatedSubtask) : null;
     }
 
     public async Task<bool> DeleteAsync(int subTaskId)
     {
         return await _subTaskRepository.DeleteAsync(subTaskId);
     }
-
     public async Task<PaginatedList<SubTaskDto>> GetAllByParentIdAsync(int parentTaskId, PageOptionsRequest pageOptions)
     {
         var paginatedSubTasks = await _subTaskRepository.GetAllByParentIdPaginatedAsync(parentTaskId, pageOptions);

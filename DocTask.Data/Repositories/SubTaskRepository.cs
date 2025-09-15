@@ -20,6 +20,10 @@ namespace DocTask.Data.Repositories
             return await _context.Tasks
                 .FirstOrDefaultAsync(t => t.TaskId == subTaskId && t.ParentTaskId == null);
         }
+        public async Task<TaskEntity?> GetBySubIdAsync(int parentTaskId, int subTaskId)
+        {
+            return await _context.Tasks.FirstOrDefaultAsync(t => t.TaskId == subTaskId && t.ParentTaskId == parentTaskId);
+        }
 
         public async Task<TaskEntity> CreateAsync(TaskEntity subTask)
         {
@@ -28,16 +32,17 @@ namespace DocTask.Data.Repositories
             await _context.SaveChangesAsync();
             return subTask;
         }
-
-        public async Task<TaskEntity> UpdateAsync(TaskEntity subTask)
+        //Tu dong
+        public async Task<TaskEntity?> UpdateSubtask(int parentTaskId, int subTaskId, TaskEntity subtask)
         {
-            var existingTask = await GetByIdAsync(subTask.TaskId);
-            if (existingTask == null)
-                throw new ArgumentException("SubTask not found");
+            var existingSubtask = await _context.Tasks
+                .FirstOrDefaultAsync(t => t.TaskId == subtask.TaskId && t.ParentTaskId == parentTaskId);
+            if (existingSubtask == null)
+                return null;
 
-            _context.Entry(existingTask).CurrentValues.SetValues(subTask);
+            _context.Entry(existingSubtask).CurrentValues.SetValues(subtask);
             await _context.SaveChangesAsync();
-            return existingTask;
+            return existingSubtask;
         }
 
         public async Task<bool> DeleteAsync(int subTaskId)
@@ -100,5 +105,6 @@ namespace DocTask.Data.Repositories
                 .OrderBy(t => t.CreatedAt)
                 .ToListAsync();
         }
+
     }
 }
